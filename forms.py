@@ -85,7 +85,7 @@ class VenueForm(Form):
     phone = StringField(
         'phone'
     )
-    image_link = StringField(
+    image_link = FileField(
         'image_link'
     )
     genres = SelectMultipleField(

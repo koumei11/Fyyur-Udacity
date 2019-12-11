@@ -259,7 +259,7 @@ def show_venue(venue_id):
     'facebook_link': venue.facebook_link,
     'seeking_talent': venue.seeking_talent,
     'seeking_description': venue.seeking_description,
-    "image_link": "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
+    "image_link": venue.image_link,
     'upcoming_shows_count': shows_data['upcoming_shows_count'],
     'upcoming_shows': shows_data['upcoming_shows'],
     'past_shows_count': shows_data['past_shows_count'],
@@ -291,11 +291,10 @@ def create_venue_submission():
     city = request.form.get('city', '')
     state = request.form.get('state', '')
     address = request.form.get('address', '')
-    img_link = "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
     phone = request.form.get('phone', '')
     genres = request.form.getlist('genres')
     facebook_link = request.form.get('facebook_link', '')
-    venue = Venue(name=name, city=city, state=state, address=address, image_link=img_link, phone=phone, genres=genres, facebook_link=facebook_link)
+    venue = Venue(name=name, city=city, state=state, address=address, phone=phone, genres=genres, facebook_link=facebook_link)
     db.session.add(venue)
     db.session.commit()
   except:
@@ -446,8 +445,8 @@ def show_artist(artist_id):
     'seeking_venue': artist.seeking_venue,
     'seeking_description': artist.seeking_description,
     'website': artist.website,
+    'image_link': artist.image_link,
     'facebook_link': artist.facebook_link,
-    'image_link': "https://images.unsplash.com/photo-1558369981-f9ca78462e61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=794&q=80",
     'upcoming_shows_count': show_data['upcoming_shows_count'],
     'upcoming_shows': show_data['upcoming_shows'],
     'past_shows_count': show_data['past_shows_count'],
@@ -580,6 +579,20 @@ def edit_venue_submission(venue_id):
         venue.seeking_talent = True
     else:
         venue.seeking_talent = False
+
+    file = ''
+    filename = ''
+    image_path = ''
+    print(request.files)
+    if request.files['image_link']:
+        file = request.files['image_link']
+        filename = file.filename
+
+    if file and is_valid_image(filename):
+        filename = secure_filename(filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(image_path)
+    venue.image_link = image_path
 
     db.session.add(venue)
     db.session.commit()
