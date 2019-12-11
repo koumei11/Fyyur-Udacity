@@ -1,8 +1,9 @@
 {% extends 'layouts/main.html' %}
 {% block title %}Edit Artist{% endblock %}
 {% block content %}
+
   <div class="form-wrapper">
-    <form class="form" method="post" action="/artists/{{artist.id}}/edit">
+    <form class="form" method="post" action="/artists/{{artist.id}}/edit" enctype="multipart/form-data">
       <h3 class="form-heading">Edit artist <em>{{ artist.name }}</em></h3>
       <div class="form-group">
         <label for="name">Name</label>
@@ -29,10 +30,26 @@
         {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', id=form.state, autofocus = true) }}
       </div>
       <div class="form-group">
+        <label for="seeking_description">Seeking</label>
+        {{ form.seeking_description(class_ = 'form-control', placeholder='I am seeking...', id=form.state, autofocus = true ) }}
+      </div>
+      <div class="form-group">
+        <label for="website">Website</label>
+        {{ form.website(class_ = 'form-control', placeholder='http://', id=form.state, autofocus = true ) }}
+      </div>
+      <div class="form-group">
           <label for="genres">Facebook Link</label>
           {{ form.facebook_link(class_ = 'form-control', placeholder='http://', id=form.state, autofocus = true) }}
-        </div>
+      </div>
+      <div class="form-group">
+          <label for="image_link">Crop Your Image</label>
+          <div class="panel panel-default">
+              <div class="panel-heading">Select Profile Image</div>
+              <div class="panel-body">
+                {{ form.image_link(class_ = 'form-control', id=form.state, autofocus = true) }}
+              </div>
+          </div>
+      </div>
       <input type="submit" value="Edit Artist" class="btn btn-primary btn-lg btn-block">
     </form>
-  </div>
 {% endblock %}

@@ -30,7 +30,9 @@
 			<i class="fab fa-facebook-f"></i> {% if venue.facebook_link %}<a href="{{ venue.facebook_link }}" target="_blank">{{ venue.facebook_link }}</a>{% else %}No Facebook Link{% endif %}
 		</p>
 		{% if venue.seeking_talent %}
-		<div class="seeking">
+		<button class="delete-btn" data-id="{{ venue.id }}" style="background: white; color: #d9534f; padding: 10px; margin: 15px 0 10px 20px; border: none; display: block;">DELETE VENUE</button>
+		<a href="/venues/{{venue.id}}/edit" style="display: block; margin-left: 30px; width: 80px;">UPDATE</a>
+		<div class="seeking" style="margin-bottom: 20px;">
 			<p class="lead">Currently seeking talent</p>
 			<div class="description">
 				<i class="fas fa-quote-left"></i> {{ venue.seeking_description }} <i class="fas fa-quote-right"></i>
@@ -40,9 +42,10 @@
 		<p class="not-seeking">
 			<i class="fas fa-moon"></i> Not currently seeking talent
 		</p>
+		<button class="delete-btn" data-id="{{ venue.id }}" style="background: white; color: #d9534f; padding: 10px; margin: 15px 0 10px 20px; border: none;">DELETE VENUE</button>
+		<a href="/venues/{{venue.id}}/edit" style="display: block; margin-left: 30px; width: 80px;">UPDATE</a>
 		{% endif %}
 	</div>
-	<button class="delete-btn" data-id="{{ venue.id }}">DELETE VENUE</button>
 	<div class="col-sm-6">
 		<img src="{{ venue.image_link }}" alt="Venue Image" />
 	</div>
@@ -75,5 +78,18 @@
 		{% endfor %}
 	</div>
 </section>
+<script>
+	const deleteBtn = document.querySelector('.delete-btn');
+	deleteBtn.onclick = function(e) {
+		const deleteId = e.target.dataset['id'];
+		fetch('/venues/'+deleteId+'/delete', {
+			method: 'POST'
+		})
+		.then(response => { 
+			window.location.href = response['url'];
+		})
+		.catch(() => { console.log('Error happened'); })
+	}
+</script>
 {% endblock %}
 

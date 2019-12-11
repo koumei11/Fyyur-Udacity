@@ -117,16 +117,5 @@
   <script>window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.11.1.min.js"><\/script>')</script>
   <script type="text/javascript" src="/static/js/libs/bootstrap-3.1.1.min.js" defer></script>
   <script type="text/javascript" src="/static/js/plugins.js" defer></script>
-  <script>
-      const deleteBtn = document.querySelector('.delete-btn');
-      deleteBtn.onclick = function(e) {
-        const deleteId = e.target.dataset['id'];
-        fetch('/venues/'+deleteId+'/delete', {
-          method: 'POST'
-        })
-        .then(() => { console.log('Success'); })
-        .catch(() => { console.log('Error happened'); })
-      }
-    </script>
 </body>
 </html>
