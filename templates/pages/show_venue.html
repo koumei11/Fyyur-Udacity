@@ -48,7 +48,7 @@
 	</div>
 	<div class="col-sm-6">
 		{% if venue.image_link %}
-			<img src="../../{{ venue.image_link }}" alt="Venue Image" />
+			<img src="/{{ venue.image_link }}" alt="Venue Image" />
 		{% else %}
 			<p>No image</p>
 		{% endif %}
@@ -61,7 +61,7 @@
 		<div class="col-sm-4">
 			<div class="tile tile-show">
 				{% if show.artist.image_link %}
-					<img src="../../{{ show.artist.image_link }}" alt="Show Artist Image" />
+					<img src="/{{ show.artist.image_link }}" alt="Show Artist Image" />
 				{% else %}
 					<p>No Image</p>
 				{% endif %}
@@ -79,7 +79,7 @@
 		<div class="col-sm-4">
 			<div class="tile tile-show">
 				{% if show.artist.image_link %}
-					<img src="{{ show.artist.image_link }}" alt="Show Artist Image" />
+					<img src="/{{ show.artist.image_link }}" alt="Show Artist Image" />
 				{% else %}
 					<p>No Image</p>
 				{% endif %}
